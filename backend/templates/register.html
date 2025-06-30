@@ -1,0 +1,14 @@
+{% extends "base.html" %} {%block title%}Create user {%endblock%}
+ {%block content%}
+{%load crispy_forms_tags%}
+<h2> Registratons</h2>
+<form method="POST" class="form-group card p-4">
+    {%csrf_token%}
+    {{form | crispy}}
+<p>Already register: <a href="{% url 'login' %}">Login</a></p>
+<button type="submit" class="btn btn-primary">Submit</button><br/>
+<a href={%url 'login'%} class="btn btn-secondary">Cancel</a>
+
+</form>
+
+{%endblock%}
