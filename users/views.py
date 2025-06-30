@@ -16,7 +16,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')  # or wherever you want
+            return redirect('login')  # or wherever you want
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})

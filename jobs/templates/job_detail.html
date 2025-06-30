@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Job Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h2>{{ job.job_title }}</h2>
+  <p><strong>Description:</strong> {{ job.job_description }}</p>
+  <p><strong>Post Ratio:</strong> {{ job.get_job_post_ratio_display }}</p>
+
+  <hr>
+
+  {% if existing_proposal %}
+    <div class="alert alert-info">
+      You have already submitted a proposal for this job.
+    </div>
+  {% else %}
+    <h4>Submit Your Proposal</h4>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Submit Proposal</button>
+    </form>
+  {% endif %}
+
+</div>
+{% endblock %}

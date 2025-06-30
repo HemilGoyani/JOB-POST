@@ -14,6 +14,7 @@
 <div class="d-flex justify-content-between align-items-center mb-2">
     <h2 class="mb-0">Welcome {{ request.user.name }}</h2>
     <div>
+        <a class="btn btn-primary me-2" href="{% url 'job_list' %}">List of jobs</a>
         <a class="btn btn-primary me-2" href="{% url 'user_list' %}">List Users</a>
         <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
     </div>

@@ -1,42 +1,48 @@
-{% extends "base.html" %} {%block title%} Employee List{%endblock%}
+{% extends "base.html" %} {%block title%}Job list{%endblock%}
  {%block content%} 
- <div class="d-flex justify-content-between mb-3">
-    <h2>Employee List</h2>
-    <a class="btn btn-primary" href={%url 'create'%}>Create Employee</a>
- </div>
+ <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="mb-0">Welcome {{ request.user.name }}</h2>
+    <div>
+        {% if user.is_superuser %}
+        <a class="btn btn-primary me-2" href="{% url 'create_job' %}">Create Job</a>
+        {% endif %}
+        <a class="btn btn-primary" href={%url 'dashboard'%}>Dashboard</a>
+    </div>
+</div>
 
  <table class="table table-bordered">
   <thead class="table-dark">
     <tr>
-        <th>#</th>
-        <th>Employee ID</th>
-        <th>Employee Name</th>
-        <th>Employee Email</th>
-        <th>Employee Contact</th>
+        <th>ID</th>
+        <th>job_title</th>
+        <th>job_description</th>
+        <th>job_post_ratio</th>
         <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    {%if employees%}
-    {%for employee in employees%}
+    {%if jobs%}
+    {%for job in jobs%}
     <tr>
         <td>{{forloop.counter}}</td>
-        <td>{{employee.employee_id}}</td>
-        <td>{{employee.employee_name}}</td>
-        <td>{{employee.employee_email}}</td>
-        <td>{{employee.employee_contact}}</td>
+        <td>{{job.job_title}}</td>
+        <td>{{job.job_description}}</td>
+        <td>{{job.job_post_ratio}}</td>
         <td>
-            <a href="{%url 'update' employee.pk%}" class="btn btn-success btn-sm">Edit</a>
-            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{employee.pk}}">Delete</button>
+            <a href="{% url 'job_detail' job.id %}" class="btn btn-info btn-sm">View</a>
+            {% if user.is_superuser %}
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{job.pk}}">Delete</button>
+            {% endif %}
+
         </td>
 
     </tr>
     {%endfor%}{%else%}
     <tr>
-    <td colspan="6"class="text-center">No employee found ...</td>
+    <td colspan="6"class="text-center">No job found ...</td>
     </tr>
     {%endif%}
-    </tbody>
+    </tbody>  
 
   <!-- Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -56,7 +62,7 @@
             </form>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
-      </div>
+      </div>/
     </div>
   </div>
   <script>
@@ -65,7 +71,7 @@
         const button = event.relatedTarget;
         const employeeId = button.getAttribute('data-id')
         const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = `/delete/${employeeId}/`;
+        deleteForm.action = `/jobs/delete/${employeeId}/`;
     })
   </script>
  </table>
