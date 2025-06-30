@@ -29,7 +29,7 @@
         <td>{{employee.position}}</td>
         {% if user.is_superuser %}
         <td>
-            <a href="{%url 'update' employee.pk%}" class="btn btn-success btn-sm">Edit</a>
+            <a href="{%url 'update_user' employee.pk%}" class="btn btn-success btn-sm">Edit</a>
             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{employee.pk}}">Delete</button>
         </td>
         {% endif %}
@@ -69,7 +69,7 @@
         const button = event.relatedTarget;
         const employeeId = button.getAttribute('data-id')
         const deleteForm = document.getElementById('deleteForm');
-        deleteForm.action = `/delete/${employeeId}/`;
+        deleteForm.action = `/users/delete/${employeeId}/`;
     })
   </script>
  </table>

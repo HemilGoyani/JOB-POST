@@ -43,10 +43,12 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
 @login_required
 def user_list(request):
     users = User.objects.all()
     return render(request, 'user_list.html', {'users': users})
+
 
 @login_required
 def update_user(request, pk):
@@ -56,15 +58,16 @@ def update_user(request, pk):
 
         if form.is_valid():
             form.save()
-            return redirect('list')
+            return redirect('user_list')
         
     else:
         form = CustomUserUpdateForm(instance=employee)
-    return render(request, 'update.html', {'form':form})
+    return render(request, 'update_user.html', {'form':form})
+
 
 @login_required
 def delete_user(request, pk):
     employee = User.objects.get(id= pk)
     if request.method == "POST":
         employee.delete()
-        return redirect('list')
+        return redirect('user_list')

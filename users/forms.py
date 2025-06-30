@@ -19,7 +19,7 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class CustomUserUpdateForm(UserCreationForm):
+class CustomUserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'name', 'position', 'phone']
